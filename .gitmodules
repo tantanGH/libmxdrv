@@ -1,0 +1,3 @@
+[submodule "libs/libj"]
+	path = libs/libj
+	url = https://github.com/tantanGH/libj.git
