@@ -11,8 +11,8 @@
 #define MXDRV_STATUS_PAUSED         (0xFF00)
 #define MXDRV_STATUS_FADEOUT_END    (0xFF01)
 
-uint32_t mxdrv_load_mml(uint8_t* mml_data, size_t mml_len, uint8_t* data_title, int16_t use_pdx);
-uint32_t mxdrv_load_pcm(uint8_t* pcm_data, size_t pcm_len, uint8_t* pcm_name);
+uint32_t mxdrv_load_mml(const uint8_t* mml_data, size_t mml_len, const uint8_t* data_title, int16_t use_pdx);
+uint32_t mxdrv_load_pcm(const uint8_t* pcm_data, size_t pcm_len, const uint8_t* pcm_name);
 uint32_t mxdrv_m_play();
 uint32_t mxdrv_m_end();
 uint32_t mxdrv_m_stop();
