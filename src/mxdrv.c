@@ -20,11 +20,11 @@ static inline void safe_memcpy(void *dst, const void *src, size_t len) {
 }
 
 // $02 LOADMML
-uint32_t mxdrv_load_mml(const uint8_t* mml_data, size_t mml_len, const uint8_t* data_title, int16_t use_pdx) {
+int32_t mxdrv_load_mml(const uint8_t* mml_data, size_t mml_len, const uint8_t* data_title, int16_t use_pdx) {
 
   // scratchpad
   uint8_t* buffer = malloc(mml_len + 270);
-  if (buffer == NULL) return 0x8000000;
+  if (buffer == NULL) return -1;
 
   // 8 bytes header
   uint16_t* header = (uint16_t*)buffer;
@@ -57,7 +57,7 @@ uint32_t mxdrv_load_mml(const uint8_t* mml_data, size_t mml_len, const uint8_t* 
 }
 
 // $03 LOADPCM
-uint32_t mxdrv_load_pcm(const uint8_t* pcm_data, size_t pcm_len, const uint8_t* pcm_name) {
+int32_t mxdrv_load_pcm(const uint8_t* pcm_data, size_t pcm_len, const uint8_t* pcm_name) {
 
   // already loaded in the driver?
   uint8_t* current_pcm_name = mxdrv_pcm_name();
@@ -68,7 +68,7 @@ uint32_t mxdrv_load_pcm(const uint8_t* pcm_data, size_t pcm_len, const uint8_t* 
 
   // scratchpad
   uint8_t* buffer = malloc(pcm_len + 270);
-  if (buffer == NULL) return 0x8000000;
+  if (buffer == NULL) return -1;
 
   // 8 bytes header
   uint16_t* header = (uint16_t*)buffer;
@@ -101,7 +101,7 @@ uint32_t mxdrv_load_pcm(const uint8_t* pcm_data, size_t pcm_len, const uint8_t* 
 }
 
 // $04 M_PLAY
-uint32_t mxdrv_m_play() {
+int32_t mxdrv_m_play() {
 	
   register uint32_t reg_d0 asm ("d0") = 0x04;    // M_PLAY
 
@@ -116,7 +116,7 @@ uint32_t mxdrv_m_play() {
 }
 
 // $05 M_END
-uint32_t mxdrv_m_end() {
+int32_t mxdrv_m_end() {
 	
   register uint32_t reg_d0 asm ("d0") = 0x05;    // M_END
 
@@ -131,7 +131,7 @@ uint32_t mxdrv_m_end() {
 }
 
 // $06 M_STOP
-uint32_t mxdrv_m_stop() {
+int32_t mxdrv_m_stop() {
 
 	register uint32_t reg_d0 asm ("d0") = 0x06;    // M_STOP
 
@@ -146,7 +146,7 @@ uint32_t mxdrv_m_stop() {
 }
 
 // $07 M_CONT
-uint32_t mxdrv_m_cont() {
+int32_t mxdrv_m_cont() {
 
 	register uint32_t reg_d0 asm ("d0") = 0x07;    // M_CONT
 
@@ -193,7 +193,7 @@ uint8_t* mxdrv_pcm_name() {
 }
 
 // $0C M_FADEOUT
-uint32_t mxdrv_m_fadeout(uint16_t speed) {
+int32_t mxdrv_m_fadeout(uint16_t speed) {
 
 	register uint32_t reg_d0 asm ("d0") = 0x0C;    // M_FADEOUT
   register uint32_t reg_d1 asm ("d1") = speed;
@@ -209,7 +209,7 @@ uint32_t mxdrv_m_fadeout(uint16_t speed) {
 }
 
 // $12 M_STAT
-uint16_t mxdrv_m_stat() {
+int32_t mxdrv_m_stat() {
 
 	register uint32_t reg_d0 asm ("d0") = 0x12;    // M_STAT
 
@@ -224,7 +224,7 @@ uint16_t mxdrv_m_stat() {
 }
 
 // $14 M_STAT2
-uint16_t mxdrv_m_stat2() {
+int32_t mxdrv_m_stat2() {
 
 	register uint32_t reg_d0 asm ("d0") = 0x14;    // M_STAT2
 
@@ -239,7 +239,7 @@ uint16_t mxdrv_m_stat2() {
 }
 
 // mxdrv keep check with trap#4 vector
-int16_t mxdrv_isavailable() {
+int32_t mxdrv_isavailable() {
 
 //  uint32_t eye_catch_addr = B_LPEEK((uint32_t*)0x0090) - 12;
   uint32_t eye_catch_addr = (uint32_t)_dos_intvcg(0x24) - 12;
