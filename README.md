@@ -49,8 +49,8 @@ my_app/
 
 ヘッダー検索パスとライブラリ検索パスをMakefile内で
 ```
--I../libs/libj/include
--L../libs/libj/lib
+-I../libs/libmxdrv/include
+-L../libs/libmxdrv/lib
 ```
 のように指定し、`-ldos -liocs -lmxdrv` でリンクできます。
 内部的にDOSコールとIOCSコールを使っているため、`-ldos -liocs`もリンクしてください。
