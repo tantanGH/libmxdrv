@@ -52,5 +52,4 @@ my_app/
 -I../libs/libmxdrv/include
 -L../libs/libmxdrv/lib
 ```
-のように指定し、`-ldos -liocs -lmxdrv` でリンクできます。
-内部的にDOSコールとIOCSコールを使っているため、`-ldos -liocs`もリンクしてください。
+のように指定し、`-lmxdrv` でリンクできます。
