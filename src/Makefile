@@ -8,6 +8,7 @@ endif
 
 # 各種コマンド短縮名
 CC = m68k-xelf-gcc
+AS = m68k-xelf-as
 AR = m68k-xelf-ar
 
 # HAS to GAS コンバータ
