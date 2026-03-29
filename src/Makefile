@@ -23,8 +23,8 @@ INCLUDE_FLAGS = -I${ELF2X68K_DIR}/lib/gcc/m68k-elf/13.4.0/include \
 				-I../include
 
 # コンパイルフラグ
-COMMON_FLAGS = -m68000 -O2 $(INCLUDE_FLAGS)
-CFLAGS = $(COMMON_FLAGS) -D__SAFE_MEMCPY__ -D__USE_JSTRICMP__
+COMMON_FLAGS = -m68000 -O2 -msoft-float $(INCLUDE_FLAGS)
+CFLAGS = $(COMMON_FLAGS)
 
 # *.c ソースファイル
 C_SRCS = mxdrv.c
