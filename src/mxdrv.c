@@ -6,7 +6,7 @@
 #include <x68k/iocs.h>
 #include "mxdrv.h"
 
-#ifndef __SAFE_MEMCPY__
+#ifdef __SAFE_MEMCPY__
 static inline void safe_memcpy(void *dst, const void *src, size_t len) {
     uint8_t *d = (uint8_t *)dst;
     const uint8_t *s = (const uint8_t *)src;
