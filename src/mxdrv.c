@@ -40,7 +40,7 @@ int32_t mxdrv_load_mml(const uint8_t* mml_data, size_t mml_len, const uint8_t* d
   safe_memcpy(buffer + 270, mml_data, mml_len);
 
 	register uint32_t reg_d0 asm ("d0") = 0x02;    // LOADMML
-  register uint32_t reg_d1 asm ("d1") = mml_len + 270;
+  register uint32_t reg_d1 asm ("d1") = (uint32_t)mml_len + 270;
   register uint32_t reg_a1 asm ("a1") = (uint32_t)buffer;
 
   asm volatile (
@@ -84,7 +84,7 @@ int32_t mxdrv_load_pcm(const uint8_t* pcm_data, size_t pcm_len, const uint8_t* p
   safe_memcpy(buffer + 270, pcm_data, pcm_len);
 
 	register uint32_t reg_d0 asm ("d0") = 0x03;    // LOADPCM
-  register uint32_t reg_d1 asm ("d1") = pcm_len + 270;
+  register uint32_t reg_d1 asm ("d1") = (uint32_t)pcm_len + 270;
   register uint32_t reg_a1 asm ("a1") = (uint32_t)buffer;
 
   asm volatile (
