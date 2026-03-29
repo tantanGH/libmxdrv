@@ -6,7 +6,7 @@
 #include <x68k/iocs.h>
 #include "mxdrv.h"
 
-#ifdef __SAFE_MEMCPY__
+// workaround for m68k newlib memcpy bug
 static inline void safe_memcpy(void *dst, const void *src, size_t len) {
     uint8_t *d = (uint8_t *)dst;
     const uint8_t *s = (const uint8_t *)src;
@@ -18,8 +18,6 @@ static inline void safe_memcpy(void *dst, const void *src, size_t len) {
         len -= chunk;
     }
 }
-#define memcpy safe_memcpy
-#endif
 
 // $02 LOADMML
 uint32_t mxdrv_load_mml(uint8_t* mml_data, size_t mml_len, uint8_t* data_title, int16_t use_pdx) {
@@ -39,7 +37,7 @@ uint32_t mxdrv_load_mml(uint8_t* mml_data, size_t mml_len, uint8_t* data_title, 
   strncpy(buffer + 8, data_title, 270 - 8);
  
   // mml data
-  memcpy(buffer + 270, mml_data, mml_len);
+  safe_memcpy(buffer + 270, mml_data, mml_len);
 
 	register uint32_t reg_d0 asm ("d0") = 0x02;    // LOADMML
   register uint32_t reg_d1 asm ("d1") = mml_len + 270;
@@ -80,19 +78,10 @@ uint32_t mxdrv_load_pcm(uint8_t* pcm_data, size_t pcm_len, uint8_t* pcm_name) {
   header[3] = 8;                        // offset to data title
 
   // pdx name
-//  printf("PCM name %08X <- %08X (%d)\n", buffer+8, pcm_name, strlen(pcm_name));
   strncpy(buffer + 8, pcm_name, 270 - 8);
 
   // pcm data
-//  printf("PCM data %08X <- %08X (%d)\n", buffer+270, pcm_data, pcm_len);
-  memcpy(buffer + 270, pcm_data, pcm_len);
-
-//  for (size_t i = 0; i < pcm_len; i++) {
-//    if (buffer[270+i] != pcm_data[i]) {
-//      printf("%08X (%d) ... not same\n",i,i);
-//      break;
-//    }
-//  }
+  safe_memcpy(buffer + 270, pcm_data, pcm_len);
 
 	register uint32_t reg_d0 asm ("d0") = 0x03;    // LOADPCM
   register uint32_t reg_d1 asm ("d1") = pcm_len + 270;
