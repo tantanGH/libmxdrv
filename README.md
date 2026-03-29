@@ -52,4 +52,5 @@ my_app/
 -I../libs/libj/include
 -L../libs/libj/lib
 ```
-のように指定し、`-lmxdrv` でリンクできます。
+のように指定し、`-ldos -liocs -lmxdrv` でリンクできます。
+内部的にDOSコールとIOCSコールを使っているため、`-ldos -liocs`もリンクしてください。
