@@ -1,6 +1,6 @@
 # elf2x68k インストールパス
 ifndef ELF2X68K_DIR
-	ELF2X68K_DIR=/opt/homebrew/Cellar/elf2x68k/20260301
+	ELF2X68K_DIR=/opt/homebrew/Cellar/elf2x68k/20260331
 endif
 
 # デフォルトサフィックスを削除
@@ -10,9 +10,6 @@ endif
 CC = m68k-xelf-gcc
 AS = m68k-xelf-as
 AR = m68k-xelf-ar
-
-# HAS to GAS コンバータ
-HAS2GAS = python3 has2gas.py
 
 # 出力アーカイブファイル名
 TARGET_FILE = ../lib/libmxdrv.a
@@ -61,9 +58,3 @@ $(TARGET_FILE) : $(OBJS)
 $(INTERMEDIATE_DIR)/%.o : %.c Makefile $(HEADER_SRCS)
 	mkdir -p $(INTERMEDIATE_DIR)
 	$(CC) $(CFLAGS) -c $*.c -o $(INTERMEDIATE_DIR)/$*.o
-
-# *.s ソースのアセンブル
-$(INTERMEDIATE_DIR)/%.o : %.s Makefile $(HEADER_SRCS)
-	mkdir -p $(INTERMEDIATE_DIR)
-	$(HAS2GAS) < $*.s > $(INTERMEDIATE_DIR)/$*.gas
-	$(AS) -c $(INTERMEDIATE_DIR)/$*.gas -o $(INTERMEDIATE_DIR)/$*.o
